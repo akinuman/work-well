@@ -1,20 +1,20 @@
-import {create} from 'zustand';
-import * as type from './interfaces';
+import { create } from 'zustand'
+import * as type from './interfaces'
 
-export const userStore = create<type.UserStoreProps>(set => ({
+export const userStore = create<type.UserStoreProps>((set) => ({
   userId: '',
-  setUserId: (value: string) => set(() => ({userId: value})),
-}));
+  setUserId: (value: string) => set(() => ({ userId: value })),
+}))
 
-export const loginStore = create<type.LoginStoreProps>(set => ({
+export const loginStore = create<type.LoginStoreProps>((set) => ({
   isLoading: false,
   error: '',
   email: '',
   password: '',
-  setIsLoading: (value: boolean) => set(() => ({isLoading: value})),
-  setError: (value: string) => set(() => ({error: value})),
-  setEmail: (value: string) => set(() => ({email: value})),
-  setPassword: (value: string) => set(() => ({password: value})),
+  setIsLoading: (value: boolean) => set(() => ({ isLoading: value })),
+  setError: (value: string) => set(() => ({ error: value })),
+  setEmail: (value: string) => set(() => ({ email: value })),
+  setPassword: (value: string) => set(() => ({ password: value })),
   setDefault: () =>
     set(() => ({
       isLoading: false,
@@ -23,21 +23,21 @@ export const loginStore = create<type.LoginStoreProps>(set => ({
       email: '',
       password: '',
     })),
-}));
+}))
 
-export const registerStore = create<type.RegisterStoreProps>(set => ({
+export const registerStore = create<type.RegisterStoreProps>((set) => ({
   isLoading: false,
   error: '',
   name: '',
   email: '',
   password: '',
   repassword: '',
-  setIsLoading: (value: boolean) => set(() => ({isLoading: value})),
-  setError: (value: string) => set(() => ({error: value})),
-  setName: (value: string) => set(() => ({name: value})),
-  setEmail: (value: string) => set(() => ({email: value})),
-  setPassword: (value: string) => set(() => ({password: value})),
-  setRepassword: (value: string) => set(() => ({repassword: value})),
+  setIsLoading: (value: boolean) => set(() => ({ isLoading: value })),
+  setError: (value: string) => set(() => ({ error: value })),
+  setName: (value: string) => set(() => ({ name: value })),
+  setEmail: (value: string) => set(() => ({ email: value })),
+  setPassword: (value: string) => set(() => ({ password: value })),
+  setRepassword: (value: string) => set(() => ({ repassword: value })),
   setDefault: () =>
     set(() => ({
       isLoading: false,
@@ -47,4 +47,4 @@ export const registerStore = create<type.RegisterStoreProps>(set => ({
       password: '',
       repassword: '',
     })),
-}));
+}))

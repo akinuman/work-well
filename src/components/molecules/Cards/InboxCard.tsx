@@ -1,30 +1,30 @@
-import React, {useState} from 'react';
-import FastImage from 'react-native-fast-image';
-import tw from '../../../styles/tailwind';
-import {FeatherIcon} from '../../../utils/Icons';
+import React, { useState } from 'react'
+import FastImage from 'react-native-fast-image'
+import tw from '../../../styles/tailwind'
+import { FeatherIcon } from '../../../utils/Icons'
 import {
   View,
   Text,
   TouchableOpacity,
   Alert,
   ActivityIndicator,
-} from 'react-native';
+} from 'react-native'
 
-import {userStore} from '../../../lib/stores/auth';
-import {useNavigate} from '../../../config/RootNavigation';
+import { userStore } from '../../../lib/stores/auth'
+import { useNavigate } from '../../../config/RootNavigation'
 
-import {useMutation, useQuery} from 'convex/react';
-import {api} from '../../../../convex/_generated/api';
+import { useMutation, useQuery } from 'convex/react'
+import { api } from '../../../../convex/_generated/api'
 
 interface InboxCardProps {
-  last_chat: string;
-  receiverId: string;
-  senderId: string;
-  createdAt: string;
-  inboxId: string;
+  last_chat: string
+  receiverId: string
+  senderId: string
+  createdAt: string
+  inboxId: string
 }
 
-type InboxCardType = (props: InboxCardProps) => JSX.Element;
+type InboxCardType = (props: InboxCardProps) => JSX.Element
 
 const InboxCard: InboxCardType = ({
   last_chat,
@@ -32,23 +32,23 @@ const InboxCard: InboxCardType = ({
   senderId,
   inboxId,
 }): JSX.Element => {
-  const {userId} = userStore();
+  const { userId } = userStore()
 
-  const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false)
 
-  const getInboxUserId = userId === receiverId ? senderId : receiverId;
+  const getInboxUserId = userId === receiverId ? senderId : receiverId
 
-  const avatar = useQuery(api.upload.profilePhoto, {userId: getInboxUserId});
-  const chatName = useQuery(api.auth.user, {userId: getInboxUserId});
-  const deleteInbox = useMutation(api.messages.deleteInbox);
+  const avatar = useQuery(api.upload.profilePhoto, { userId: getInboxUserId })
+  const chatName = useQuery(api.auth.user, { userId: getInboxUserId })
+  const deleteInbox = useMutation(api.messages.deleteInbox)
 
   const handleDeleteInbox = async () => {
-    setIsDeleteLoading(true);
+    setIsDeleteLoading(true)
     await deleteInbox({
       inboxId: inboxId as any,
-    });
-    setIsDeleteLoading(false);
-  };
+    })
+    setIsDeleteLoading(false)
+  }
 
   return (
     <TouchableOpacity
@@ -59,7 +59,8 @@ const InboxCard: InboxCardType = ({
           inboxId: inboxId,
           receiverId: chatName?._id,
         })
-      }>
+      }
+    >
       <View style={tw`flex-1 flex-row items-center gap-x-3`}>
         {avatar ? (
           <FastImage
@@ -76,12 +77,14 @@ const InboxCard: InboxCardType = ({
         {chatName ? (
           <View style={tw`flex-1 flex-col items-start`}>
             <Text
-              style={tw`default-text-color font-dosis-bold text-base text-accent-2`}>
+              style={tw`default-text-color font-dosis-bold text-base text-accent-2`}
+            >
               {chatName?.name ?? ''}
             </Text>
             <Text
               numberOfLines={1}
-              style={tw`default-text-color font-dosis text-sm text-accent-2`}>
+              style={tw`default-text-color font-dosis text-sm text-accent-2`}
+            >
               {senderId === userId ? 'You:' : ''} {last_chat}
             </Text>
           </View>
@@ -93,7 +96,10 @@ const InboxCard: InboxCardType = ({
         )}
       </View>
       {isDeleteLoading ? (
-        <ActivityIndicator color="#CC8500" size={18} />
+        <ActivityIndicator
+          color="#CC8500"
+          size={18}
+        />
       ) : (
         <TouchableOpacity
           activeOpacity={0.5}
@@ -114,14 +120,19 @@ const InboxCard: InboxCardType = ({
               ],
               {
                 cancelable: true,
-              },
-            );
-          }}>
-          <FeatherIcon name="trash-2" size={18} color="#CC8500" />
+              }
+            )
+          }}
+        >
+          <FeatherIcon
+            name="trash-2"
+            size={18}
+            color="#CC8500"
+          />
         </TouchableOpacity>
       )}
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-export default InboxCard;
+export default InboxCard

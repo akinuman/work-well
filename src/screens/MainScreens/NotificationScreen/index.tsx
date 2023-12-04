@@ -1,7 +1,7 @@
-import React from 'react';
-import DefaultLayout from '../../../components/templates/DefaultLayout';
-import tw from '../../../styles/tailwind';
-import {View, Text} from 'react-native';
+import React from 'react'
+import DefaultLayout from '../../../components/templates/DefaultLayout'
+import tw from '../../../styles/tailwind'
+import { View, Text } from 'react-native'
 
 const NotificationScreen = (): JSX.Element => {
   return (
@@ -12,7 +12,7 @@ const NotificationScreen = (): JSX.Element => {
         </Text>
       </View>
     </DefaultLayout>
-  );
-};
+  )
+}
 
-export default NotificationScreen;
+export default NotificationScreen

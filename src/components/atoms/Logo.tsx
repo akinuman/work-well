@@ -1,6 +1,6 @@
-import React from 'react';
-import {View, Text, Image} from 'react-native';
-import tw from '../../styles/tailwind';
+import React from 'react'
+import { View, Text, Image } from 'react-native'
+import tw from '../../styles/tailwind'
 
 const Logo = () => {
   return (
@@ -19,7 +19,7 @@ const Logo = () => {
         </Text>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default Logo;
+export default Logo

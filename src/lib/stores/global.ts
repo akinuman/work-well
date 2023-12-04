@@ -1,28 +1,28 @@
-import {create} from 'zustand';
-import * as type from './interfaces';
+import { create } from 'zustand'
+import * as type from './interfaces'
 
-export const menuModalStore = create<type.MenuModalProps>(set => ({
+export const menuModalStore = create<type.MenuModalProps>((set) => ({
   isVisible: false,
-  setIsVisible: (value: boolean) => set(() => ({isVisible: value})),
-}));
+  setIsVisible: (value: boolean) => set(() => ({ isVisible: value })),
+}))
 
-export const viewImageModalStore = create<type.ViewImageModalProps>(set => ({
+export const viewImageModalStore = create<type.ViewImageModalProps>((set) => ({
   image: '',
-  setImage: (value: string) => set(() => ({image: value})),
+  setImage: (value: string) => set(() => ({ image: value })),
   isVisible: false,
-  setIsVisible: (value: boolean) => set(() => ({isVisible: value})),
-}));
+  setIsVisible: (value: boolean) => set(() => ({ isVisible: value })),
+}))
 
-export const uploadProfileModalStore = create<type.UploadImageProps>(set => ({
+export const uploadProfileModalStore = create<type.UploadImageProps>((set) => ({
   isVisible: false,
-  setIsVisible: (value: boolean) => set(() => ({isVisible: value})),
+  setIsVisible: (value: boolean) => set(() => ({ isVisible: value })),
   photo: null,
-  setPhoto: (value: any) => set(() => ({photo: value})),
-}));
+  setPhoto: (value: any) => set(() => ({ photo: value })),
+}))
 
-export const uploadCoverModalStore = create<type.UploadImageProps>(set => ({
+export const uploadCoverModalStore = create<type.UploadImageProps>((set) => ({
   isVisible: false,
-  setIsVisible: (value: boolean) => set(() => ({isVisible: value})),
+  setIsVisible: (value: boolean) => set(() => ({ isVisible: value })),
   photo: null,
-  setPhoto: (value: any) => set(() => ({photo: value})),
-}));
+  setPhoto: (value: any) => set(() => ({ photo: value })),
+}))

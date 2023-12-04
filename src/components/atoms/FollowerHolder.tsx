@@ -1,6 +1,6 @@
-import React from 'react';
-import tw from '../../styles/tailwind';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React from 'react'
+import tw from '../../styles/tailwind'
+import { View, Text, TouchableOpacity } from 'react-native'
 
 const FollowerHolder = (): JSX.Element => {
   return (
@@ -16,7 +16,7 @@ const FollowerHolder = (): JSX.Element => {
         </Text>
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
-export default FollowerHolder;
+export default FollowerHolder

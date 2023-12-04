@@ -1,7 +1,7 @@
-import React from 'react';
-import tw from '../../../styles/tailwind';
-import {Image} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
+import React from 'react'
+import tw from '../../../styles/tailwind'
+import { Image } from 'react-native'
+import { BlurView } from '@react-native-community/blur'
 
 const LoadingImage = () => {
   return (
@@ -18,7 +18,7 @@ const LoadingImage = () => {
         reducedTransparencyFallbackColor="white"
       />
     </>
-  );
-};
+  )
+}
 
-export default LoadingImage;
+export default LoadingImage

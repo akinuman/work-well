@@ -1,4 +1,4 @@
-import {ToastAndroid} from 'react-native';
+import { ToastAndroid } from 'react-native'
 
 export const Toast = (message: string) => {
   ToastAndroid.showWithGravityAndOffset(
@@ -6,6 +6,6 @@ export const Toast = (message: string) => {
     ToastAndroid.SHORT,
     ToastAndroid.BOTTOM,
     0,
-    110,
-  );
-};
+    110
+  )
+}

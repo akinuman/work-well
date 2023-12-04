@@ -1,15 +1,15 @@
-import React from 'react';
-import DefaultLayout from '../../../components/templates/DefaultLayout';
-import tw from '../../../styles/tailwind';
-import {View, Text} from 'react-native';
+import React from 'react'
+import DefaultLayout from '../../../components/templates/DefaultLayout'
+import tw from '../../../styles/tailwind'
+import { View, Text } from 'react-native'
 
-import {useBackHandler} from '../../../lib/hooks/useBackHandler';
-import {useNavigate} from '../../../config/RootNavigation';
+import { useBackHandler } from '../../../lib/hooks/useBackHandler'
+import { useNavigate } from '../../../config/RootNavigation'
 
 const SearchScreen = (): JSX.Element => {
   useBackHandler(() => {
-    useNavigate('HomeScreen');
-  });
+    useNavigate('HomeScreen')
+  })
 
   return (
     <DefaultLayout title="Search">
@@ -19,7 +19,7 @@ const SearchScreen = (): JSX.Element => {
         </Text>
       </View>
     </DefaultLayout>
-  );
-};
+  )
+}
 
-export default SearchScreen;
+export default SearchScreen

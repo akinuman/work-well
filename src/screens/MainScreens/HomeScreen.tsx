@@ -1,36 +1,42 @@
-import React from 'react';
-import BootSplashScreen from '../../components/organisms/BootSplashScreen';
-import LoadingDefault from '../../components/organisms/LoadingDisplay/LoadingDefault';
-import DefaultLayout from '../../components/templates/DefaultLayout';
-import PostCard from '../../components/molecules/Cards/PostCard';
-import {FlatList, View, Text, ActivityIndicator} from 'react-native';
+import React from 'react'
+import BootSplashScreen from '../../components/organisms/BootSplashScreen'
+import LoadingDefault from '../../components/organisms/LoadingDisplay/LoadingDefault'
+import DefaultLayout from '../../components/templates/DefaultLayout'
+import PostCard from '../../components/molecules/Cards/PostCard'
+import { FlatList, View, Text, ActivityIndicator } from 'react-native'
 
-import tw from '../../styles/tailwind';
-import {userStore} from '../../lib/stores/auth';
+import tw from '../../styles/tailwind'
+import { userStore } from '../../lib/stores/auth'
 
-import {useQuery, usePaginatedQuery} from 'convex/react';
-import {api} from '../../../convex/_generated/api';
+import { useQuery, usePaginatedQuery } from 'convex/react'
+import { api } from '../../../convex/_generated/api'
 
 const HomeScreen = (): JSX.Element => {
-  const {userId} = userStore();
+  const { userId } = userStore()
 
-  const user = useQuery(api.auth.user, {userId});
+  const user = useQuery(api.auth.user, { userId })
   const {
     results: feeds,
     isLoading,
     loadMore,
-  } = usePaginatedQuery(api.post.posts, {}, {initialNumItems: 5});
+  } = usePaginatedQuery(api.post.posts, {}, { initialNumItems: 5 })
 
-  if (!user) return <BootSplashScreen />;
+  if (!user) return <BootSplashScreen />
 
   const itemKeyExtractor = (
     item: any,
-    index: {toString: () => any},
+    index: { toString: () => any }
   ): string => {
-    return index.toString();
-  };
+    return index.toString()
+  }
 
-  const renderSpinner: JSX.Element = <ActivityIndicator style={tw`pb-3`} color="#CC8500" size={40} />;
+  const renderSpinner: JSX.Element = (
+    <ActivityIndicator
+      style={tw`pb-3`}
+      color="#CC8500"
+      size={40}
+    />
+  )
 
   const listIsEmpty: JSX.Element = (
     <>
@@ -38,18 +44,20 @@ const HomeScreen = (): JSX.Element => {
         <LoadingDefault />
       ) : (
         <View
-          style={tw`flex-1 flex-col items-center justify-center w-full my-3 p-3`}>
+          style={tw`flex-1 flex-col items-center justify-center w-full my-3 p-3`}
+        >
           <Text
-            style={tw`uppercase default-text-color font-dosis-bold text-sm text-neutral-500`}>
+            style={tw`uppercase default-text-color font-dosis-bold text-sm text-neutral-500`}
+          >
             No post as of now...
           </Text>
         </View>
       )}
     </>
-  );
+  )
 
-  const renderData = ({item}: any): JSX.Element => {
-    const {_id, title, description, storageId} = item;
+  const renderData = ({ item }: any): JSX.Element => {
+    const { _id, title, description, storageId } = item
     return (
       <PostCard
         id={_id}
@@ -57,8 +65,8 @@ const HomeScreen = (): JSX.Element => {
         description={description}
         storageId={storageId}
       />
-    );
-  };
+    )
+  }
 
   return (
     <DefaultLayout title="My Feed">
@@ -75,7 +83,7 @@ const HomeScreen = (): JSX.Element => {
         }
       />
     </DefaultLayout>
-  );
-};
+  )
+}
 
-export default HomeScreen;
+export default HomeScreen

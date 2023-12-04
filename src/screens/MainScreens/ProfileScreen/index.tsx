@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
-import DefaultLayout from '../../../components/templates/DefaultLayout';
-import LoadingDefault from '../../../components/organisms/LoadingDisplay/LoadingDefault';
-import BootSplashScreen from '../../../components/organisms/BootSplashScreen';
-import UploadProfile from '../../../components/molecules/Modals/UploadProfile';
-import UploadCover from '../../../components/molecules/Modals/UploadCover';
-import ViewImage from '../../../components/molecules/Modals/ViewImage';
-import PostCard from '../../../components/molecules/Cards/PostCard';
-import FollowerHolder from '../../../components/atoms/FollowerHolder';
-import FastImage from 'react-native-fast-image';
-import tw from '../../../styles/tailwind';
-import {FeatherIcon} from '../../../utils/Icons';
+import React, { useState } from 'react'
+import DefaultLayout from '../../../components/templates/DefaultLayout'
+import LoadingDefault from '../../../components/organisms/LoadingDisplay/LoadingDefault'
+import BootSplashScreen from '../../../components/organisms/BootSplashScreen'
+import UploadProfile from '../../../components/molecules/Modals/UploadProfile'
+import UploadCover from '../../../components/molecules/Modals/UploadCover'
+import ViewImage from '../../../components/molecules/Modals/ViewImage'
+import PostCard from '../../../components/molecules/Cards/PostCard'
+import FollowerHolder from '../../../components/atoms/FollowerHolder'
+import FastImage from 'react-native-fast-image'
+import tw from '../../../styles/tailwind'
+import { FeatherIcon } from '../../../utils/Icons'
 import {
   Image,
   FlatList,
@@ -17,43 +17,45 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
-} from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
+} from 'react-native'
+import { launchImageLibrary } from 'react-native-image-picker'
 
-import {useRoute} from '@react-navigation/native';
-import {useNavigate} from '../../../config/RootNavigation';
-import {userStore} from '../../../lib/stores/auth';
+import { useRoute } from '@react-navigation/native'
+import { useNavigate } from '../../../config/RootNavigation'
+import { userStore } from '../../../lib/stores/auth'
 import {
   uploadProfileModalStore,
   uploadCoverModalStore,
   viewImageModalStore,
-} from '../../../lib/stores/global';
+} from '../../../lib/stores/global'
 
-import {useQuery, usePaginatedQuery, useMutation} from 'convex/react';
-import {api} from '../../../../convex/_generated/api';
+import { useQuery, usePaginatedQuery, useMutation } from 'convex/react'
+import { api } from '../../../../convex/_generated/api'
 
 const ProfileScreen = (): JSX.Element => {
-  const route: any = useRoute();
-  const userProfileId = route.params?.userId;
+  const route: any = useRoute()
+  const userProfileId = route.params?.userId
 
-  const [isLoadingMessage, setIsLoadingMessage] = useState<boolean>(false);
+  const [isLoadingMessage, setIsLoadingMessage] = useState<boolean>(false)
 
-  const {userId} = userStore();
-  const {setImage, setIsVisible} = viewImageModalStore();
-  const {setPhoto: setProfilePhoto, setIsVisible: setIsVisibleUploadProfile} = uploadProfileModalStore();
-  const {setPhoto: setCoverPhoto, setIsVisible: setIsVisibleUploadCover} = uploadCoverModalStore();
+  const { userId } = userStore()
+  const { setImage, setIsVisible } = viewImageModalStore()
+  const { setPhoto: setProfilePhoto, setIsVisible: setIsVisibleUploadProfile } =
+    uploadProfileModalStore()
+  const { setPhoto: setCoverPhoto, setIsVisible: setIsVisibleUploadCover } =
+    uploadCoverModalStore()
 
-  const createInbox = useMutation(api.messages.createInbox);
+  const createInbox = useMutation(api.messages.createInbox)
 
   const user = useQuery(api.auth.user, {
     userId: userProfileId ? String(userProfileId) : userId,
-  });
+  })
   const profile = useQuery(api.upload.profilePhoto, {
     userId: userProfileId ? String(userProfileId) : userId,
-  });
+  })
   const cover = useQuery(api.upload.coverPhoto, {
     userId: userProfileId ? String(userProfileId) : userId,
-  });
+  })
   const {
     results: posts,
     isLoading,
@@ -65,61 +67,65 @@ const ProfileScreen = (): JSX.Element => {
     },
     {
       initialNumItems: 5,
-    },
-  );
+    }
+  )
 
-  if (!user || !profile || !cover) return <BootSplashScreen />;
+  if (!user || !profile || !cover) return <BootSplashScreen />
 
   const handleChooseProfilePhoto = (): void => {
     let options: any = {
       selectionLimit: 1,
       mediaType: 'photo',
       includeBase64: false,
-    };
+    }
 
-    launchImageLibrary(options, response => {
+    launchImageLibrary(options, (response) => {
       if (response.didCancel) {
-        setProfilePhoto(null);
-        setIsVisibleUploadProfile(false);
-        return;
+        setProfilePhoto(null)
+        setIsVisibleUploadProfile(false)
+        return
       }
       if (response) {
-        setProfilePhoto(response?.assets);
-        setIsVisibleUploadProfile(true);
+        setProfilePhoto(response?.assets)
+        setIsVisibleUploadProfile(true)
       }
-    });
-  };
+    })
+  }
 
   const handleChooseCoverPhoto = (): void => {
     let options: any = {
       selectionLimit: 1,
       mediaType: 'photo',
       includeBase64: false,
-    };
+    }
 
-    launchImageLibrary(options, response => {
+    launchImageLibrary(options, (response) => {
       if (response.didCancel) {
-        setCoverPhoto(null);
-        setIsVisibleUploadCover(false);
-        return;
+        setCoverPhoto(null)
+        setIsVisibleUploadCover(false)
+        return
       }
       if (response) {
-        setCoverPhoto(response?.assets);
-        setIsVisibleUploadCover(true);
+        setCoverPhoto(response?.assets)
+        setIsVisibleUploadCover(true)
       }
-    });
-  };
+    })
+  }
 
   const itemKeyExtractor = (
     item: any,
-    index: {toString: () => any},
+    index: { toString: () => any }
   ): string => {
-    return index.toString();
-  };
+    return index.toString()
+  }
 
   const renderSpinner: JSX.Element = (
-    <ActivityIndicator style={tw`pb-3`} color="#CC8500" size={40} />
-  );
+    <ActivityIndicator
+      style={tw`pb-3`}
+      color="#CC8500"
+      size={40}
+    />
+  )
 
   const listIsEmpty: JSX.Element = (
     <>
@@ -127,15 +133,17 @@ const ProfileScreen = (): JSX.Element => {
         <LoadingDefault />
       ) : (
         <View
-          style={tw`flex-1 flex-col items-center justify-center w-full my-3 p-3`}>
+          style={tw`flex-1 flex-col items-center justify-center w-full my-3 p-3`}
+        >
           <Text
-            style={tw`uppercase default-text-color font-dosis-bold text-sm text-neutral-500`}>
+            style={tw`uppercase default-text-color font-dosis-bold text-sm text-neutral-500`}
+          >
             No post as of now...
           </Text>
         </View>
       )}
     </>
-  );
+  )
 
   const renderHeader: JSX.Element = (
     <>
@@ -143,17 +151,23 @@ const ProfileScreen = (): JSX.Element => {
         <TouchableOpacity
           activeOpacity={0.5}
           style={tw`absolute z-10 right-3 top-3 p-2 rounded-full bg-black bg-opacity-50`}
-          onPress={handleChooseCoverPhoto}>
-          <FeatherIcon name="camera" color="#FFFFFF" size={18} />
+          onPress={handleChooseCoverPhoto}
+        >
+          <FeatherIcon
+            name="camera"
+            color="#FFFFFF"
+            size={18}
+          />
         </TouchableOpacity>
         {cover?.url ? (
           <TouchableOpacity
             activeOpacity={0.5}
             style={tw`w-full h-full`}
             onPress={() => {
-              setImage(String(cover?.url));
-              setIsVisible(true);
-            }}>
+              setImage(String(cover?.url))
+              setIsVisible(true)
+            }}
+          >
             <FastImage
               style={tw`w-full h-full bg-accent-8`}
               resizeMode={FastImage.resizeMode.cover}
@@ -171,9 +185,10 @@ const ProfileScreen = (): JSX.Element => {
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => {
-                setImage(String(profile?.url));
-                setIsVisible(true);
-              }}>
+                setImage(String(profile?.url))
+                setIsVisible(true)
+              }}
+            >
               <FastImage
                 style={tw`w-[9rem] h-[9rem] rounded-full border-2 border-accent-3 bg-accent-8`}
                 resizeMode={FastImage.resizeMode.cover}
@@ -193,8 +208,13 @@ const ProfileScreen = (): JSX.Element => {
           <TouchableOpacity
             activeOpacity={0.5}
             style={tw`absolute z-10 right-3 bottom-1 p-2 rounded-full bg-black bg-opacity-50`}
-            onPress={handleChooseProfilePhoto}>
-            <FeatherIcon name="camera" color="#FFFFFF" size={18} />
+            onPress={handleChooseProfilePhoto}
+          >
+            <FeatherIcon
+              name="camera"
+              color="#FFFFFF"
+              size={18}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -208,12 +228,14 @@ const ProfileScreen = (): JSX.Element => {
           </Text>
         </View>
         <View
-          style={tw`flex-row items-center justify-between w-full px-3 py-3 border-b border-accent-8`}>
+          style={tw`flex-row items-center justify-between w-full px-3 py-3 border-b border-accent-8`}
+        >
           <FollowerHolder />
           <View style={tw`flex-row items-center gap-x-1`}>
             <TouchableOpacity
               activeOpacity={0.5}
-              style={tw`w-auto rounded-xl px-5 py-2 bg-accent-2`}>
+              style={tw`w-auto rounded-xl px-5 py-2 bg-accent-2`}
+            >
               <Text style={tw`font-dosis text-xs text-accent-1`}>
                 Edit Profile
               </Text>
@@ -224,22 +246,30 @@ const ProfileScreen = (): JSX.Element => {
                 activeOpacity={0.5}
                 style={tw`w-auto rounded-xl px-3 py-2 bg-accent-2`}
                 onPress={async () => {
-                  setIsLoadingMessage(true);
+                  setIsLoadingMessage(true)
                   const inbox = await createInbox({
                     last_chat: '',
                     receiverId: userProfileId,
                     senderId: userId,
-                  });
-                  setIsLoadingMessage(false);
+                  })
+                  setIsLoadingMessage(false)
                   useNavigate('ChatScreen', {
                     inboxId: inbox.inboxId,
                     receiverId: userProfileId,
-                  });
-                }}>
+                  })
+                }}
+              >
                 {isLoadingMessage ? (
-                  <ActivityIndicator color="#FFFFFF" size={18} />
+                  <ActivityIndicator
+                    color="#FFFFFF"
+                    size={18}
+                  />
                 ) : (
-                  <FeatherIcon name="mail" size={18} color="#FFFFFF" />
+                  <FeatherIcon
+                    name="mail"
+                    size={18}
+                    color="#FFFFFF"
+                  />
                 )}
               </TouchableOpacity>
             )}
@@ -247,10 +277,10 @@ const ProfileScreen = (): JSX.Element => {
         </View>
       </View>
     </>
-  );
+  )
 
-  const renderData = ({item}: any): JSX.Element => {
-    const {_id, title, description, storageId} = item;
+  const renderData = ({ item }: any): JSX.Element => {
+    const { _id, title, description, storageId } = item
     return (
       <PostCard
         id={_id}
@@ -258,8 +288,8 @@ const ProfileScreen = (): JSX.Element => {
         description={description}
         storageId={storageId}
       />
-    );
-  };
+    )
+  }
 
   return (
     <DefaultLayout title={user.name}>
@@ -288,7 +318,7 @@ const ProfileScreen = (): JSX.Element => {
       />
       <ViewImage />
     </DefaultLayout>
-  );
-};
+  )
+}
 
-export default ProfileScreen;
+export default ProfileScreen

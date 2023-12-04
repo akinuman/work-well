@@ -1,24 +1,19 @@
-import React from 'react';
-import LoadingDefault from '../../../components/organisms/LoadingDisplay/LoadingDefault';
-import DefaultLayout from '../../../components/templates/DefaultLayout';
-import InboxCard from '../../../components/molecules/Cards/InboxCard';
-import tw from '../../../styles/tailwind';
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  FlatList,
-} from 'react-native';
+import React from 'react'
+import LoadingDefault from '../../../components/organisms/LoadingDisplay/LoadingDefault'
+import DefaultLayout from '../../../components/templates/DefaultLayout'
+import InboxCard from '../../../components/molecules/Cards/InboxCard'
+import tw from '../../../styles/tailwind'
+import { View, Text, ActivityIndicator, FlatList } from 'react-native'
 
-import {userStore} from '../../../lib/stores/auth';
-import {useBackHandler} from '../../../lib/hooks/useBackHandler';
-import {useNavigate} from '../../../config/RootNavigation';
+import { userStore } from '../../../lib/stores/auth'
+import { useBackHandler } from '../../../lib/hooks/useBackHandler'
+import { useNavigate } from '../../../config/RootNavigation'
 
-import {usePaginatedQuery} from 'convex/react';
-import {api} from '../../../../convex/_generated/api';
+import { usePaginatedQuery } from 'convex/react'
+import { api } from '../../../../convex/_generated/api'
 
 const InboxScreen = (): JSX.Element => {
-  const {userId} = userStore();
+  const { userId } = userStore()
 
   const {
     results: inboxes,
@@ -31,23 +26,27 @@ const InboxScreen = (): JSX.Element => {
     },
     {
       initialNumItems: 10,
-    },
-  );
+    }
+  )
 
   useBackHandler(() => {
-    useNavigate('HomeScreen');
-  });
+    useNavigate('HomeScreen')
+  })
 
   const itemKeyExtractor = (
     item: any,
-    index: {toString: () => any},
+    index: { toString: () => any }
   ): string => {
-    return index.toString();
-  };
+    return index.toString()
+  }
 
   const renderSpinner: JSX.Element = (
-    <ActivityIndicator style={tw`pb-3`} color="#CC8500" size={40} />
-  );
+    <ActivityIndicator
+      style={tw`pb-3`}
+      color="#CC8500"
+      size={40}
+    />
+  )
 
   const listIsEmpty: JSX.Element = (
     <>
@@ -55,18 +54,20 @@ const InboxScreen = (): JSX.Element => {
         <LoadingDefault />
       ) : (
         <View
-          style={tw`flex-1 flex-col items-center justify-center w-full my-3 p-3`}>
+          style={tw`flex-1 flex-col items-center justify-center w-full my-3 p-3`}
+        >
           <Text
-            style={tw`uppercase default-text-color font-dosis-bold text-sm text-neutral-500`}>
+            style={tw`uppercase default-text-color font-dosis-bold text-sm text-neutral-500`}
+          >
             You inbox is empty...
           </Text>
         </View>
       )}
     </>
-  );
+  )
 
-  const renderData = ({item}: any): JSX.Element => {
-    const {_id, last_chat, receiverId, senderId, _creationTime} = item;
+  const renderData = ({ item }: any): JSX.Element => {
+    const { _id, last_chat, receiverId, senderId, _creationTime } = item
     return (
       <InboxCard
         last_chat={last_chat}
@@ -75,8 +76,8 @@ const InboxScreen = (): JSX.Element => {
         createdAt={_creationTime}
         inboxId={_id}
       />
-    );
-  };
+    )
+  }
 
   return (
     <DefaultLayout title="Messages">
@@ -93,7 +94,7 @@ const InboxScreen = (): JSX.Element => {
         }
       />
     </DefaultLayout>
-  );
-};
+  )
+}
 
-export default InboxScreen;
+export default InboxScreen

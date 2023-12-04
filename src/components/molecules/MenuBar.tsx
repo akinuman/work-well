@@ -1,25 +1,25 @@
-import React from 'react';
-import Modal from 'react-native-modal';
-import FollowerHolder from '../atoms/FollowerHolder';
+import React from 'react'
+import Modal from 'react-native-modal'
+import FollowerHolder from '../atoms/FollowerHolder'
 import FastImage from 'react-native-fast-image'
-import tw from '../../styles/tailwind';
-import {FeatherIcon} from '../../utils/Icons';
-import {ScrollView, View, Text, TouchableOpacity, Image} from 'react-native';
+import tw from '../../styles/tailwind'
+import { FeatherIcon } from '../../utils/Icons'
+import { ScrollView, View, Text, TouchableOpacity, Image } from 'react-native'
 
-import {menuModalStore} from '../../lib/stores/global';
-import {useNavigate} from '../../config/RootNavigation';
-import {userStore} from '../../lib/stores/auth';
-import {useLogoutMutation} from '../../lib/functions/useAuth';
+import { menuModalStore } from '../../lib/stores/global'
+import { useNavigate } from '../../config/RootNavigation'
+import { userStore } from '../../lib/stores/auth'
+import { useLogoutMutation } from '../../lib/functions/useAuth'
 
-import {useQuery} from 'convex/react';
-import {api} from '../../../convex/_generated/api';
+import { useQuery } from 'convex/react'
+import { api } from '../../../convex/_generated/api'
 
 const MenuBar = (): JSX.Element => {
-  const {userId} = userStore();
-  const user = useQuery(api.auth.user, {userId});
-  const profile = useQuery(api.upload.profilePhoto, {userId});
+  const { userId } = userStore()
+  const user = useQuery(api.auth.user, { userId })
+  const profile = useQuery(api.upload.profilePhoto, { userId })
 
-  const {isVisible, setIsVisible} = menuModalStore();
+  const { isVisible, setIsVisible } = menuModalStore()
 
   return (
     <Modal
@@ -29,17 +29,22 @@ const MenuBar = (): JSX.Element => {
       backdropOpacity={0.3}
       isVisible={isVisible}
       onBackdropPress={() => setIsVisible(false)}
-      onBackButtonPress={() => setIsVisible(false)}>
-      <ScrollView style={tw`flex-grow-0`} showsVerticalScrollIndicator={false}>
+      onBackButtonPress={() => setIsVisible(false)}
+    >
+      <ScrollView
+        style={tw`flex-grow-0`}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={tw`flex-1 flex-col items-center w-full px-7 gap-y-20`}>
           <View style={tw`flex-col w-full gap-y-3`}>
             <TouchableOpacity
               activeOpacity={0.8}
               style={tw`flex-row items-center w-full gap-x-3`}
               onPress={() => {
-                setIsVisible(false);
-                useNavigate('ProfileScreen');
-              }}>
+                setIsVisible(false)
+                useNavigate('ProfileScreen')
+              }}
+            >
               {profile?.url ? (
                 <FastImage
                   style={tw`rounded-full w-[3rem] h-[3rem] bg-accent-8`}
@@ -74,10 +79,15 @@ const MenuBar = (): JSX.Element => {
               activeOpacity={0.5}
               style={tw`flex-row items-center w-full py-3 gap-x-3`}
               onPress={() => {
-                setIsVisible(false);
-                useNavigate('HomeScreen');
-              }}>
-              <FeatherIcon name="home" color="#CC8500" size={20} />
+                setIsVisible(false)
+                useNavigate('HomeScreen')
+              }}
+            >
+              <FeatherIcon
+                name="home"
+                color="#CC8500"
+                size={20}
+              />
               <Text style={tw`default-text-color font-dosis text-xl`}>
                 Home
               </Text>
@@ -86,26 +96,41 @@ const MenuBar = (): JSX.Element => {
               activeOpacity={0.5}
               style={tw`flex-row items-center w-full py-3 gap-x-3`}
               onPress={() => {
-                setIsVisible(false);
-                useNavigate('ProfileScreen');
-              }}>
-              <FeatherIcon name="user" color="#CC8500" size={20} />
+                setIsVisible(false)
+                useNavigate('ProfileScreen')
+              }}
+            >
+              <FeatherIcon
+                name="user"
+                color="#CC8500"
+                size={20}
+              />
               <Text style={tw`default-text-color font-dosis text-xl`}>
                 Profile
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.5}
-              style={tw`flex-row items-center w-full py-3 gap-x-3`}>
-              <FeatherIcon name="settings" color="#CC8500" size={20} />
+              style={tw`flex-row items-center w-full py-3 gap-x-3`}
+            >
+              <FeatherIcon
+                name="settings"
+                color="#CC8500"
+                size={20}
+              />
               <Text style={tw`default-text-color font-dosis text-xl`}>
                 Settings
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.5}
-              style={tw`flex-row items-center w-full py-3 gap-x-3`}>
-              <FeatherIcon name="info" color="#CC8500" size={20} />
+              style={tw`flex-row items-center w-full py-3 gap-x-3`}
+            >
+              <FeatherIcon
+                name="info"
+                color="#CC8500"
+                size={20}
+              />
               <Text style={tw`default-text-color font-dosis text-xl`}>
                 About
               </Text>
@@ -116,10 +141,15 @@ const MenuBar = (): JSX.Element => {
               activeOpacity={0.5}
               style={tw`flex-row items-center w-full py-3 gap-x-3`}
               onPress={() => {
-                setIsVisible(false);
-                useLogoutMutation();
-              }}>
-              <FeatherIcon name="log-out" color="#CC8500" size={20} />
+                setIsVisible(false)
+                useLogoutMutation()
+              }}
+            >
+              <FeatherIcon
+                name="log-out"
+                color="#CC8500"
+                size={20}
+              />
               <Text style={tw`default-text-color font-dosis text-xl`}>
                 Log out
               </Text>
@@ -133,7 +163,7 @@ const MenuBar = (): JSX.Element => {
         </View>
       </ScrollView>
     </Modal>
-  );
-};
+  )
+}
 
-export default MenuBar;
+export default MenuBar
